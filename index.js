@@ -1,15 +1,25 @@
 #!/usr/bin/env node
 var http = require('http')
+var program = require('commander')
 var keypress = require('keypress')
 var colors = require('colors')
 var exec = require('child_process').exec
 
-var package = process.argv[1]
-var mode = process.argv[2] === 'dev' ? '--dev' : 'save'
+var package
+var mode = 'save'
 var i = 0;
 var limit = 5;
 var pagination;
 var page = 1;
+
+program
+  .version('1.0.1')
+  .option('-p, --package', 'package name')
+  .option('-m, --mode', 'dependencies mode')
+  .parse(process.argv);
+
+if (program.package) package = program.package
+if (program.mode) mode = program.mode
 
 keypress(process.stdin);
 console.log(`Link to http://registry.npmjs.org/${package}`)

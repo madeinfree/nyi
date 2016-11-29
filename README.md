@@ -10,5 +10,5 @@ npm yarn install terminal interface
 
 # Use
 ```command
-> nyi package
+> nyi -p react -m save
 ```
