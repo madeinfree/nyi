@@ -1,6 +1,6 @@
 {
   "name": "nyi",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "node package install by yarn uses terminal interface",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "colors": "^1.1.2",
-    "commander": "^2.9.0",
+    "command-line-args": "^3.0.3",
     "keypress": "^0.2.1"
   }
 }
