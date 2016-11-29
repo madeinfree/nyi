@@ -1,0 +1,19 @@
+{
+  "name": "nyi",
+  "version": "1.0.0",
+  "description": "node package install by yarn uses terminal interface",
+  "main": "get.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "nyi" : "./index.js"
+  },
+  "keywords": [],
+  "author": "Whien_Liou <sal95610@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "keypress": "^0.2.1"
+  }
+}
