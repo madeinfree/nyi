@@ -1,6 +1,6 @@
 # NYI (Npm Yarn Install)
 
-![](http://i.imgur.com/IK8Wggp.gif)
+![](https://media.giphy.com/media/l2JhCwrQ9O0svNTpK/giphy.gif)
 
 npm yarn install TUI interface
 
