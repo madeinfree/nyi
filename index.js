@@ -115,7 +115,7 @@ function walk(package) {
               } else {
                 mode = 'save'
               }
-              callDown(versionKeys, 'new')
+              callDown(versionKeys, 'void')
             break
             case 'v':
               execSync(`yarn --version`, (error, stdout, stderr) => {
@@ -206,9 +206,9 @@ function callDown(versionKeys, type) {
   console.log(`---------------- choose ${package} install version, mode ${mode} ----------------`)
   if (i > versionKeys.length - 2) {
     i = versionKeys.length - 1
-  } else if (!(i + 1 > versionKeys.length) && type === 'new') {
+  } else if (!(i + 1 > versionKeys.length) && type === 'new' && type !== 'void') {
     i = 0
-  } else if (!(i + 1 > versionKeys.length) && type !== 'twoway') {
+  } else if (!(i + 1 > versionKeys.length) && type !== 'twoway' && type !== 'void') {
     i++
   }
   if (i + 1 > page * limit) {
