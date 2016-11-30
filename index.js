@@ -137,6 +137,20 @@ function walk(package) {
               }
               exit()
             break
+            case 'u':
+            clear()
+            console.log(`install ${package} ^${versionKeys[i]}..`)
+            if (mode === 'dev') {
+              exec(`yarn add --dev ${package}@^${versionKeys[i]}`, (error, stdout, stderr) => {
+                console.log(stdout)
+              })
+            } else {
+              exec(`yarn add ${package}@^${versionKeys[i]}`, (error, stdout, stderr) => {
+                console.log(stdout)
+              })
+            }
+            exit()
+            break
           }
           if (key && key.ctrl && key.name == 'g') {
             clear()
@@ -294,6 +308,7 @@ function tips() {
   }
   console.log('-- installation --'.yellow)
   console.log(`* press 'enter' to install choose version`)
+  console.log(`* press 'u' to install above then choose version`)
   console.log(`* press 'l' to install latest version`)
   console.log(`* press 'n' to install next version`)
   console.log(`* press 'r' to remove package`)
