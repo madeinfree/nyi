@@ -1,9 +1,10 @@
-#!/usr/bin/env node
 var http = require('http')
 var commandLineArgs = require('command-line-args')
 var keypress = require('keypress')
 var colors = require('colors')
 var exec = require('child_process').exec
+var execSync = require('child_process').execSync
+var packageJSON = require('./package.json')
 
 var package
 var mode
@@ -11,6 +12,7 @@ var i = 0;
 var limit = 5;
 var pagination;
 var page = 1;
+var packageJSONDependenciesKey = Object.keys(packageJSON.dependencies)
 
 const optionDefinitions = [
   { name: 'package', alias: 'p', defaultOption: true },
@@ -44,18 +46,20 @@ var req = http.get(`http://registry.npmjs.org/${package}`, function(res) {
             callDown(versionKeys)
           break;
           case 'down':
+          case 'j':
             callDown(versionKeys)
             break
           case 'up':
+          case 'k':
             callUp(versionKeys)
             break
           case 'l':
             if (mode === 'dev') {
-              exec(`yarn add --dev ${package}@latest`, (error, stdout, stderr) => {
+              execSync(`yarn add --dev ${package}@latest`, (error, stdout, stderr) => {
                 console.log(stdout)
               })
             } else {
-              exec(`yarn add ${package}@latest`, (error, stdout, stderr) => {
+              execSync(`yarn add ${package}@latest`, (error, stdout, stderr) => {
                 console.log(stdout)
               })
             }
@@ -63,11 +67,11 @@ var req = http.get(`http://registry.npmjs.org/${package}`, function(res) {
           break
           case 'n':
             if (mode === 'dev') {
-              exec(`yarn add --dev ${package}@next`, (error, stdout, stderr) => {
+              execSync(`yarn add --dev ${package}@next`, (error, stdout, stderr) => {
                 console.log(stdout)
               })
             } else {
-              exec(`yarn add ${package}@next`, (error, stdout, stderr) => {
+              execSync(`yarn add ${package}@next`, (error, stdout, stderr) => {
                 console.log(stdout)
               })
             }
@@ -77,15 +81,19 @@ var req = http.get(`http://registry.npmjs.org/${package}`, function(res) {
             console.log(versionKeys)
           break
           case 'r':
-            clear()
-            console.log(`remove ${package} ${versionKeys[i]}..`)
-            exec(`yarn remove ${package}`, (error, stdout, stderr) => {
-              console.log(stdout)
-            })
-          exit()
+            if (packageJSONDependenciesKey.indexOf(package) !== -1) {
+              clear()
+              console.log(`remove ${package} v${packageJSON.dependencies[package]}..`)
+              exec(`yarn remove ${package}`, (error, stdout, stderr) => {
+                console.log(stdout)
+              })
+              exit()
+            } else {
+              console.log(`you didn't install ${package}`.red)
+            }
           break
           case 'v':
-            exec(`yarn --version`, (error, stdout, stderr) => {
+            execSync(`yarn --version`, (error, stdout, stderr) => {
               console.log(`yarn version ${stdout}`)
             })
           break
@@ -111,6 +119,14 @@ var req = http.get(`http://registry.npmjs.org/${package}`, function(res) {
             mode = 'save'
           }
           callDown(versionKeys, 'new')
+        }
+        if (key && key.ctrl && key.name == 'g') {
+          clear()
+          console.log(`Download https://registry.npmjs.org/${package}/-/${package}-${versionKeys[i]}.tgz ...`)
+          execSync(`wget https://registry.npmjs.org/${package}/-/${package}-${versionKeys[i]}.tgz`, (error, stdout, stderr) => {
+            console.log(stdout)
+          })
+          exit()
         }
         if (key && key.ctrl && key.name == 'c') {
           exit()
@@ -180,13 +196,7 @@ function callDown(versionKeys, type) {
     }
   }
   console.log(`-------- ${ar.join(' ')} --------`)
-  console.log('')
-  console.log(`* press space to next pagination`)
-  console.log(`* press enter to install choose version`)
-  console.log(`* press 'l' to install latest version`)
-  console.log(`* press 'n' to install next version`)
-  console.log(`* press 'r' to remove package`)
-  console.log(`* press 'ctrl + d' to change install mode`)
+  tips()
 }
 
 function callUp(versionKeys, type) {
@@ -222,11 +232,27 @@ function callUp(versionKeys, type) {
     }
   }
   console.log(`-------- ${ar.join(' ')} --------`)
+  tips()
+}
+
+function tips() {
   console.log('')
+  console.log('-- now version --'.yellow)
+  if (packageJSONDependenciesKey.indexOf(package) !== -1) {
+    console.log(`now version: ${packageJSON.dependencies[package]}`.red)
+  } else {
+    console.log(`${package} is not install`)
+  }
+  console.log('-- installation --'.yellow)
   console.log(`* press space to next pagination`)
   console.log(`* press enter to install choose version`)
   console.log(`* press 'l' to install latest version`)
   console.log(`* press 'n' to install next version`)
   console.log(`* press 'r' to remove package`)
   console.log(`* press 'ctrl + d' to change install mode`)
+  console.log('-- download package --'.yellow)
+  console.log(`* press 'ctrl + g' to download tgz package`)
+  console.log('-- selection --'.yellow)
+  console.log(`* press 'j' to select next`)
+  console.log(`* press 'k' to select pre`)
 }

@@ -1,7 +1,7 @@
 {
   "name": "nyi",
-  "version": "1.0.2",
-  "description": "node package install by yarn uses terminal interface",
+  "version": "1.0.3",
+  "description": "node package install by yarn uses TUI interface",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
