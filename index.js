@@ -145,6 +145,13 @@ function walk(package) {
             })
             exit()
           }
+          if (key && key.ctrl && key.name == 's') {
+            if (page < pagination) {
+              i = i + 4
+              page = page + 1
+            }
+            callDown(versionKeys)
+          }
           if (key && key.ctrl && key.name == 'c') {
             exit()
           }
