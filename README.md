@@ -36,7 +36,7 @@ react is not install
 -- installation --
 
 * press 'enter' to install choose version
-* press 'u' to install above then choose version like (^0.0.1)
+* press 'u' to install above than choose version (^0.0.1)
 * press 'l' to install latest version
 * press 'n' to install next version
 * press 'r' to remove package
