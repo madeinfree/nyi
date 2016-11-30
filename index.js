@@ -32,7 +32,7 @@ package = options.package
 mode = options.mode || 'save'
 
 program
-  .version('1.0.8')
+  .version('1.1.0')
   .usage('[options]')
   .option('-p --package', 'npm package name')
   .option('-m --mode', 'set dependencies mode, "dev" or "save")')
