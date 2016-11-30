@@ -1,6 +1,6 @@
 # NY (Npm Yarn)
 
-![](http://i.imgur.com/XSFQAnS.png)
+![](http://i.imgur.com/IK8Wggp.gif)
 
 npm yarn install terminal interface
 
