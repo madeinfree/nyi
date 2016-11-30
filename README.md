@@ -1,8 +1,8 @@
-# NY (Npm Yarn)
+# NYI (Npm Yarn Install)
 
 ![](http://i.imgur.com/IK8Wggp.gif)
 
-npm yarn install terminal interface
+npm yarn install TUI interface
 
 # Installation
 
