@@ -109,6 +109,14 @@ function walk(package) {
                 console.log(`you didn't install ${package}`.red)
               }
             break
+            case 'i':
+              if (mode !== 'dev') {
+                mode = 'dev'
+              } else {
+                mode = 'save'
+              }
+              callDown(versionKeys, 'new')
+            break
             case 'v':
               execSync(`yarn --version`, (error, stdout, stderr) => {
                 console.log(`yarn version ${stdout}`)
@@ -129,14 +137,6 @@ function walk(package) {
               exit()
             break
           }
-          if (key && key.ctrl && key.name == 'd') {
-            if (mode !== 'dev') {
-              mode = 'dev'
-            } else {
-              mode = 'save'
-            }
-            callDown(versionKeys, 'new')
-          }
           if (key && key.ctrl && key.name == 'g') {
             clear()
             console.log(`Download https://registry.npmjs.org/${package}/-/${package}-${versionKeys[i]}.tgz ...`)
@@ -145,12 +145,19 @@ function walk(package) {
             })
             exit()
           }
-          if (key && key.ctrl && key.name == 's') {
+          if (key && key.ctrl && key.name == 'd') {
             if (page < pagination) {
               i = i + 4
               page = page + 1
             }
             callDown(versionKeys)
+          }
+          if (key && key.ctrl && key.name == 'b') {
+            if (page - 1 !== 0) {
+              i = i - 4
+              page = page - 1
+            }
+            callUp(versionKeys)
           }
           if (key && key.ctrl && key.name == 'c') {
             exit()
@@ -285,15 +292,16 @@ function tips() {
     console.log(`${package} is not install`)
   }
   console.log('-- installation --'.yellow)
-  console.log(`* press space to next pagination`)
-  console.log(`* press enter to install choose version`)
+  console.log(`* press 'enter' to install choose version`)
   console.log(`* press 'l' to install latest version`)
   console.log(`* press 'n' to install next version`)
   console.log(`* press 'r' to remove package`)
-  console.log(`* press 'ctrl + d' to change install mode`)
+  console.log(`* press 'i' to change install mode`)
   console.log('-- download package --'.yellow)
   console.log(`* press 'ctrl + g' to download tgz package`)
   console.log('-- selection --'.yellow)
+  console.log(`* press 'space' or 'ctrl + d' to next pagination`)
+  console.log(`* press 'ctrl + b' to pre pagination`)
   console.log(`* press 'j' to select next`)
   console.log(`* press 'k' to select pre`)
   console.log('-- exit --'.yellow)
