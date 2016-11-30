@@ -53,6 +53,7 @@ function walk(package) {
         pagination = Math.ceil(versionKeys.length / limit)
         callDown(versionKeys, 'new')
         process.stdin.on('keypress', function (ch, key) {
+          if (key === undefined) return
           switch(key.name) {
             case 'space':
               if (page + 1 > pagination) {
