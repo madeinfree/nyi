@@ -53,6 +53,10 @@ react is not install
 * press 'j' to select next
 * press 'k' to select pre
 
+-- document --
+
+* press 'o' to open npm website
+
 -- exit --
 
 * press 'ctrl + c' to exit
