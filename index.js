@@ -123,6 +123,10 @@ function walk(package) {
                 console.log(`yarn version ${stdout}`)
               })
             break
+            case 'o':
+              console.log(`open website: https://www.npmjs.com/package/${package}...`)
+              exec(`open https://www.npmjs.com/package/${package}`)
+            break
             case 'return':
               clear()
               console.log(`install ${package} ${versionKeys[i]}..`)
@@ -320,6 +324,8 @@ function tips() {
   console.log(`* press 'ctrl + b' to pre pagination`)
   console.log(`* press 'j' to select next`)
   console.log(`* press 'k' to select pre`)
+  console.log('-- document --')
+  console.log(`* press 'o' to open npm website`.yellow)
   console.log('-- exit --'.yellow)
   console.log(`* press 'ctrl + c' to exit`)
 }
