@@ -1,6 +1,6 @@
 {
   "name": "nyi",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "node package install by yarn uses TUI interface",
   "main": "index.js",
   "scripts": {
