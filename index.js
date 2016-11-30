@@ -6,7 +6,7 @@ var keypress = require('keypress')
 var colors = require('colors')
 var exec = require('child_process').exec
 var execSync = require('child_process').execSync
-var packageJSON = require(path.resolve(__dirname, 'package.json'))
+var packageJSON = require(process.cwd() + '/package.json')
 
 var package
 var mode
