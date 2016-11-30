@@ -30,17 +30,30 @@ Options:
 # Keybind
 ```command
 -- now version --
+
 react is not install
+
 -- installation --
-* press space to next pagination
-* press enter to install choose version
+
+* press 'enter' to install choose version
+* press 'u' to install above then choose version
 * press 'l' to install latest version
 * press 'n' to install next version
 * press 'r' to remove package
-* press 'ctrl + d' to change install mode
+* press 'i' to change install mode
+
 -- download package --
+
 * press 'ctrl + g' to download tgz package
+
 -- selection --
+
+* press 'space' or 'ctrl + d' to next pagination
+* press 'ctrl + b' to pre pagination
 * press 'j' to select next
 * press 'k' to select pre
+
+-- exit --
+
+* press 'ctrl + c' to exit
 ```
