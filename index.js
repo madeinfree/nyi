@@ -256,4 +256,6 @@ function tips() {
   console.log('-- selection --'.yellow)
   console.log(`* press 'j' to select next`)
   console.log(`* press 'k' to select pre`)
+  console.log('-- exit --'.yellow)
+  console.log(`* press 'ctrl + c' to exit`)
 }
