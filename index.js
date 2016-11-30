@@ -285,10 +285,10 @@ function callUp(versionKeys, type) {
 function tips() {
   console.log('')
   console.log('-- now version --'.yellow)
-  if (packageJSONDependenciesKey.indexOf(package) !== -1) {
-    console.log(`now version: ${packageJSON.dependencies[package]}`.red)
-  } else if (packageJSONDevDependenciesKey.indexOf(package) !== -1) {
-    console.log(`now version: ${packageJSON.devDependencies[package]}`.red)
+  if (packageJSONDependenciesKey.indexOf(package[0]) !== -1) {
+    console.log(`now version: ${packageJSON.dependencies[package[0]]}`.red)
+  } else if (packageJSONDevDependenciesKey.indexOf(package[0]) !== -1) {
+    console.log(`now version: ${packageJSON.devDependencies[package[0]]}`.red)
   } else {
     console.log(`${package} is not install`)
   }
