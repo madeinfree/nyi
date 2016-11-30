@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 var path = require('path')
 var http = require('http')
+var program = require('commander')
 var commandLineArgs = require('command-line-args')
 var keypress = require('keypress')
 var colors = require('colors')
@@ -20,11 +21,20 @@ var packageJSONDevDependenciesKey = Object.keys(packageJSON.devDependencies || {
 const optionDefinitions = [
   { name: 'package', alias: 'p', defaultOption: true },
   { name: 'mode', alias: 'm' },
+  { name: 'help' },
+  { name: 'version', alias: 'V' }
 ]
 
 const options = commandLineArgs(optionDefinitions)
 package = options.package
 mode = options.mode || 'save'
+
+program
+  .version('1.0.8')
+  .usage('[options]')
+  .option('-p --package', 'npm package name')
+  .option('-m --mode', 'set dependencies mode, "dev" or "save")')
+  .parse(process.argv)
 
 keypress(process.stdin);
 console.log(`Link to http://registry.npmjs.org/${package}`)
