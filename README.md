@@ -15,6 +15,18 @@ npm yarn install terminal interface
 > nyi -p react -m save
 ```
 
+# Options
+```command
+> nyi --help
+Usage: index [options]
+
+Options:
+-h, --help     output usage information
+-V, --version  output the version number
+-p --package   npm package name
+-m --mode      set dependencies mode, "dev" or "save")
+```
+
 # Keybind
 ```command
 -- now version --
