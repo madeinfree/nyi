@@ -179,7 +179,7 @@ function walk(package) {
 
 // main
 packagelen = (typeof package === 'object' && package.length) > 1 ? package.length : 1
-if (package && packagelen === 1) {
+if (package && packagelen === 1 && package.length !== 0) {
   walk(package[0])
 } else if (packagelen > 1) {
   clear()
