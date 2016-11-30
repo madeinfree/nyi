@@ -9,9 +9,14 @@ var exec = require('child_process').exec
 var execSync = require('child_process').execSync
 var packageJSON = require(process.cwd() + '/package.json')
 
+var parseData
+var versionKeys
 var package
 var packagelen
 var mode
+var description
+var author
+var packageDependencies
 var i = 0
 var limit = 5
 var pagination
@@ -49,11 +54,15 @@ function walk(package) {
     res.on('data', (chunk) => data += chunk)
     res.on('end', () => {
       try {
-        let parseData = JSON.parse(data)
-        var versionKeys = Object.keys(parseData.versions)
+        parseData = JSON.parse(data)
+        versionKeys = Object.keys(parseData.versions)
+        description = parseData.versions[versionKeys[i]].description
+        author = parseData.versions[versionKeys[i]].author
+        packageDependencies = parseData.versions[versionKeys[i]].dependencies
         pagination = Math.ceil(versionKeys.length / limit)
         callDown(versionKeys, 'new')
         process.stdin.on('keypress', function (ch, key) {
+          adjustInfo()
           if (key === undefined) return
           switch(key.name) {
             case 'space':
@@ -221,6 +230,12 @@ function exit() {
   process.stdin.pause()
 }
 
+function adjustInfo() {
+  description = parseData.versions[versionKeys[i]].description
+  author = parseData.versions[versionKeys[i]].author
+  packageDependencies = parseData.versions[versionKeys[i]].dependencies
+}
+
 function callDown(versionKeys, type) {
   clear()
   console.log(`---------------- choose ${package} install version, mode ${mode} ----------------`)
@@ -303,11 +318,17 @@ function callUp(versionKeys, type) {
 
 function tips() {
   console.log('')
-  console.log('-- now version --'.yellow)
+  console.log('-- description --'.yellow)
+  console.log(description ? description : '')
+  console.log('-- author --'.yellow)
+  console.log(author ? author : `${package} team`)
+  console.log('-- dependencies --'.yellow)
+  console.log(packageDependencies ? packageDependencies : {})
+  console.log('-- local version --'.yellow)
   if (packageJSONDependenciesKey.indexOf(package[0]) !== -1) {
-    console.log(`now version: ${packageJSON.dependencies[package[0]]}`.red)
+    console.log(`local version: ${packageJSON.dependencies[package[0]]}`.red)
   } else if (packageJSONDevDependenciesKey.indexOf(package[0]) !== -1) {
-    console.log(`now version: ${packageJSON.devDependencies[package[0]]}`.red)
+    console.log(`local version: ${packageJSON.devDependencies[package[0]]}`.red)
   } else {
     console.log(`${package} is not install`)
   }
