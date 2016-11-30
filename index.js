@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var http = require('http')
 var commandLineArgs = require('command-line-args')
 var keypress = require('keypress')
