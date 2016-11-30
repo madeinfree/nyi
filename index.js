@@ -13,7 +13,8 @@ var i = 0;
 var limit = 5;
 var pagination;
 var page = 1;
-var packageJSONDependenciesKey = Object.keys(packageJSON.dependencies)
+var packageJSONDependenciesKey = Object.keys(packageJSON.dependencies || {})
+var packageJSONDevDependenciesKey = Object.keys(packageJSON.devDependencies || {})
 
 const optionDefinitions = [
   { name: 'package', alias: 'p', defaultOption: true },
@@ -241,6 +242,8 @@ function tips() {
   console.log('-- now version --'.yellow)
   if (packageJSONDependenciesKey.indexOf(package) !== -1) {
     console.log(`now version: ${packageJSON.dependencies[package]}`.red)
+  } else if (packageJSONDevDependenciesKey.indexOf(package) !== -1) {
+    console.log(`now version: ${packageJSON.devDependencies[package]}`.red)
   } else {
     console.log(`${package} is not install`)
   }
