@@ -13,7 +13,7 @@
   "author": "Whien_Liou <sal95610@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "colors": "^1.1.2",
+    "colors": "1.1.2",
     "command-line-args": "^3.0.3",
     "commander": "2.9.0",
     "keypress": "^0.2.1"

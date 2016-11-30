@@ -12,12 +12,13 @@ var packageJSON = require(process.cwd() + '/package.json')
 var package
 var packagelen
 var mode
-var i = 0;
-var limit = 5;
-var pagination;
-var page = 1;
+var i = 0
+var limit = 5
+var pagination
+var page = 1
 var packageJSONDependenciesKey = Object.keys(packageJSON.dependencies || {})
 var packageJSONDevDependenciesKey = Object.keys(packageJSON.devDependencies || {})
+var t
 
 const optionDefinitions = [
   { name: 'package', alias: 'p', defaultOption: true, multiple: true },
@@ -101,9 +102,9 @@ function walk(package) {
             case 'r':
               if (packageJSONDependenciesKey.indexOf(package) !== -1) {
                 clear()
-                console.log(`remove ${package} v${packageJSON.dependencies[package]}..`)
+                t = twirlTimer(`remove ${package} v${packageJSON.dependencies[package]}..`)
                 exec(`yarn remove ${package}`, (error, stdout, stderr) => {
-                  console.log(stdout)
+                  stop_twirlTimer(t, stdout + "\n" + `remove ${package} version ${packageJSON.dependencies[package]} done...`)
                 })
                 exit()
               } else {
@@ -129,28 +130,28 @@ function walk(package) {
             break
             case 'return':
               clear()
-              console.log(`install ${package} ${versionKeys[i]}..`)
+              t = twirlTimer(`install ${package} ${versionKeys[i]}..`)
               if (mode === 'dev') {
                 exec(`yarn add --dev ${package}@${versionKeys[i]}`, (error, stdout, stderr) => {
-                  console.log(stdout)
+                  stop_twirlTimer(t, stdout + "\n" + `${package} version ${versionKeys[i]} done...`)
                 })
               } else {
                 exec(`yarn add ${package}@${versionKeys[i]}`, (error, stdout, stderr) => {
-                  console.log(stdout)
+                  stop_twirlTimer(t, stdout + "\n" + `${package} version ${versionKeys[i]} done...`)
                 })
               }
               exit()
             break
             case 'u':
             clear()
-            console.log(`install ${package} ^${versionKeys[i]}..`)
+            t = twirlTimer(`install ${package} ^${versionKeys[i]}..`)
             if (mode === 'dev') {
               exec(`yarn add --dev ${package}@^${versionKeys[i]}`, (error, stdout, stderr) => {
-                console.log(stdout)
+                stop_twirlTimer(t, stdout + "\n" + `${package} version ^${versionKeys[i]} done...`)
               })
             } else {
               exec(`yarn add ${package}@^${versionKeys[i]}`, (error, stdout, stderr) => {
-                console.log(stdout)
+                stop_twirlTimer(t, stdout + "\n" + `${package} version ^${versionKeys[i]} done...`)
               })
             }
             exit()
@@ -324,8 +325,25 @@ function tips() {
   console.log(`* press 'ctrl + b' to pre pagination`)
   console.log(`* press 'j' to select next`)
   console.log(`* press 'k' to select pre`)
-  console.log('-- document --')
-  console.log(`* press 'o' to open npm website`.yellow)
+  console.log('-- document --'.yellow)
+  console.log(`* press 'o' to open npm website`)
   console.log('-- exit --'.yellow)
   console.log(`* press 'ctrl + c' to exit`)
+}
+
+function twirlTimer(msg){
+  return (function() {
+    var P = ["\\", "|", "/", "-"];
+    var x = 0;
+    return setInterval(function() {
+      process.stdout.write("\r" + msg.yellow + P[x++].yellow);
+      x &= 3;
+    }, 250);
+  })();
+}
+
+function stop_twirlTimer(timer, msg){
+  clearInterval(timer)
+  process.stdout.clearLine()
+  process.stdout.write("\r" + msg + "\n")
 }
